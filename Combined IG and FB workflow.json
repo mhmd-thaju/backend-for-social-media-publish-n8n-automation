@@ -1,0 +1,1575 @@
+{
+  "name": "Combined IG and FB workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "5f62136b-b2dc-48fa-a4e6-f79832d8ed80"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "6cb39155-6726-42e8-a0db-f28e9c26c96e",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "f4b35cfe-36a6-4336-8672-6526a9f16416",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ea8ecc99-285e-4e1c-90fb-591e148a8990",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "story_image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "21a1f565-cd10-48ff-a2df-d9d5a86705f5",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "story_video",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e0409241-c2db-4911-9bae-102813042b8f",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "linkedin_text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "5018f5ea-2fd0-4907-9815-08ad59f2ad54",
+                    "leftValue": "={{ $json.body.media_type }}",
+                    "rightValue": "linkedin_image",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -704,
+        480
+      ],
+      "id": "6dc937f8-9eb7-4790-b2ed-1c816ea3f5f2",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.0-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.0-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You're a professional article writer for major social media platforms, newspaper, magazine etc.\nWrite an article about the topic \"{{ $('FastAPI Trigger').item.json.body.text_topic }}\".\nUse the style and tone which captivates and immerses the audience.\nDo not exceed more than 250 words!!.\n\nAlso include trending and relatable facebook hashtags relatable to article, so it reaches wide audience."
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "93af5745-78d0-47a0-acb1-3eff02264023",
+      "name": "TextModel",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JZmilfEQ32nbtenm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "36a496b7-6598-435d-baea-e7cc020bbc29",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text.replace(/^##\\s*/,\"\") }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        0
+      ],
+      "id": "28c9b18d-1a81-4f5f-a44a-a0ee2a3a326d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "me",
+        "edge": "feed",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "message",
+                "value": "={{ $('Edit Fields').item.json.content.parts[0].text }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        944,
+        0
+      ],
+      "id": "188ca5ed-d6d3-423c-bf39-6a9d63c1ff08",
+      "name": "Facebook Graph API",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "6nHTTCcHujBaoFid",
+          "name": "Facebook Content Publishing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "me",
+        "edge": "photos",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "message",
+                "value": "={{ $json.content.parts[0].text }}"
+              },
+              {
+                "name": "url",
+                "value": "={{ $('FastAPI Trigger').item.json.body.image_url }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        960,
+        176
+      ],
+      "id": "826e2664-e303-4bd1-aa31-68e23d0099fc",
+      "name": "Facebook Graph API1",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "6nHTTCcHujBaoFid",
+          "name": "Facebook Content Publishing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4dbd760c-e7a4-42c7-a7d2-9ecf1c71a9d8",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text.replace(/[*]/g,'') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        384,
+        288
+      ],
+      "id": "d98ecb34-b619-49d0-9e27-77400cc6d454",
+      "name": "ImageEditField"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "image_url",
+                "value": "={{ $('FastAPI Trigger').item.json.body.image_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $json.content.parts[0].text }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        960,
+        368
+      ],
+      "id": "729fb889-aef8-44df-b739-95e5ae3931dc",
+      "name": "Insta Image media container",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1136,
+        368
+      ],
+      "id": "f9a4cd56-e5d7-4c17-a199-000c299081c3",
+      "name": "Insta image wait",
+      "webhookId": "1ad5be01-6b52-4b9b-9593-0b402d3cd00a"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $('Insta Image media container').item.json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1296,
+        368
+      ],
+      "id": "cb9b9370-36dd-4b0c-91c3-97637c4378fd",
+      "name": "Insta image media publish",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "6nHTTCcHujBaoFid",
+          "name": "Facebook Content Publishing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You're a professional, experienced and highly motivated person who gives caption for video, to be published of various trending social media platforms\n\nAnalyze the video from the given url\nURL: {{ $json.body.video_url }}\nand generate and highly catchy caption and along with perfect hashtag for facebook and instagram.\nIMPORTANT : Only provide one perfect caption along with trending, relatable facbook hashtags related video. "
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        48,
+        624
+      ],
+      "id": "4b47297c-06ab-41e5-9dea-8f26486971ed",
+      "name": "VideocaptionModel",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JZmilfEQ32nbtenm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cfbc3df-faf8-4b7d-a065-136353963892",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text.replace(/[*]/g,'') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        624
+      ],
+      "id": "c794e76f-6f90-4e7d-9a36-39537a7439d2",
+      "name": "VideoEdit"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('FastAPI Trigger').item.json.body.video_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        960,
+        528
+      ],
+      "id": "4fc12542-b3b3-4236-bb80-6a35dde1b4cb",
+      "name": "VideoDownload"
+    },
+    {
+      "parameters": {
+        "hostUrl": "graph-video.facebook.com",
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "1019861091216347",
+        "edge": "videos",
+        "sendBinaryData": true,
+        "binaryPropertyName": "data",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "description",
+                "value": "={{ $('VideoEdit').item.json.content.parts[0].text }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1184,
+        528
+      ],
+      "id": "1a6c6975-e020-4bba-82d0-c770a98935c5",
+      "name": "FacebookVideo",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "6nHTTCcHujBaoFid",
+          "name": "Facebook Content Publishing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "video_url",
+                "value": "={{ $('VideoForm').item.json.Video_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "={{ $json.content.parts[0].text }}"
+              },
+              {
+                "name": "media_type",
+                "value": "REELS"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        944,
+        736
+      ],
+      "id": "ed845710-0204-4e78-b18f-ccb96e4d173c",
+      "name": "Instavideomediacontainer",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1168,
+        736
+      ],
+      "id": "fdb5ee19-cc4e-4d5c-b4cf-b429147a01d8",
+      "name": "InstavideoWait",
+      "webhookId": "644ab3e4-02cd-4a72-8863-026cd7c4d532"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        736
+      ],
+      "id": "b0e75430-43c0-4aae-a36d-234c2a907833",
+      "name": "Insta vdo media",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "6nHTTCcHujBaoFid",
+          "name": "Facebook Content Publishing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "image_url",
+                "value": "={{ $('FastAPI Trigger').item.json.body.image_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "Testing with n8n"
+              },
+              {
+                "name": "media_type",
+                "value": "STORIES"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        352,
+        992
+      ],
+      "id": "f2854165-5bfa-4272-9777-ef9bdf9d4128",
+      "name": "IG story md container",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 25
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        992
+      ],
+      "id": "98ac78cf-1176-4643-8f62-22e2482da579",
+      "name": "Ig story wait",
+      "webhookId": "6960f0e6-6b14-45bb-b35b-c81f6500888c"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $('IG story md container').item.json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        832,
+        992
+      ],
+      "id": "c9cb9615-b3e7-496e-b1e9-b310c5af8e2f",
+      "name": "Insta story media",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "video_url",
+                "value": "={{ $('FastAPI Trigger').item.json.body.video_url }}"
+              },
+              {
+                "name": "caption",
+                "value": "Testing with n8n"
+              },
+              {
+                "name": "media_type",
+                "value": "STORIES"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        352,
+        1200
+      ],
+      "id": "8358a93b-6988-478a-a1e7-57f36b57755f",
+      "name": "IG story vd md container",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 50
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        560,
+        1200
+      ],
+      "id": "e18f9208-6ec8-455e-92bb-297a8a3b6577",
+      "name": "Ig story vd wait",
+      "webhookId": "6960f0e6-6b14-45bb-b35b-c81f6500888c"
+    },
+    {
+      "parameters": {
+        "httpRequestMethod": "POST",
+        "graphApiVersion": "v23.0",
+        "node": "17841477936017734",
+        "edge": "media_publish",
+        "options": {
+          "queryParameters": {
+            "parameter": [
+              {
+                "name": "creation_id",
+                "value": "={{ $('IG story vd md container').item.json.id }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.facebookGraphApi",
+      "typeVersion": 1,
+      "position": [
+        832,
+        1200
+      ],
+      "id": "f980fac0-549e-4e16-b535-ad0f2f8282ab",
+      "name": "Insta story vd media",
+      "credentials": {
+        "facebookGraphApi": {
+          "id": "Cz3KzhsJpNXAqeYd",
+          "name": "Facebook Graph account- Instagram"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "fastapi-data",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -944,
+        560
+      ],
+      "id": "1c9050cc-74cb-4e81-aed4-f89f79795bd3",
+      "name": "FastAPI Trigger",
+      "webhookId": "500b3e7b-c950-431c-a9d6-f02521196463"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const input = $('FastAPI Trigger').first().json.body.scheduled_time;\n\n  // 1. Check if input exists and isn't the 'immediate' flag\n  if (input && input !== \"immediate\") {\n    try {\n      // Convert to proper Date format (Handle space for cross-browser compatibility)\n      const date = new Date(input.replace(\" \", \"T\"));\n\n      // Subtract 5 hours 30 minutes (IST → UTC)\n      const utc = new Date(date.getTime() - (5.5 * 60 * 60 * 1000));\n\n      // Output ISO format (required by Wait node)\n      item.json.convertedDateTime = utc.toISOString();\n      item.json.skipWait = false;\n    } catch (e) {\n      // Fallback if date parsing fails\n      item.json.skipWait = true;\n    }\n  } else {\n    // 2. If 'immediate' or empty, tell n8n to skip the wait\n    item.json.convertedDateTime = new Date(Date.now()+5*1000).toISOString(); \n    item.json.skipWait = true;\n  }\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        0
+      ],
+      "id": "2309fbbd-15aa-4cb8-a8b2-7a2d29171c14",
+      "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json.convertedDateTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        0
+      ],
+      "id": "b1abe5ff-e7d4-4579-b36d-1b8c11f54bdf",
+      "name": "Wait3",
+      "webhookId": "505ea18e-914c-4735-9732-c10b0e79fa24",
+      "retryOnFail": false
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const input = $('FastAPI Trigger').first().json.body.scheduled_time;\n\n  // 1. Check if input exists and isn't the 'immediate' flag\n  if (input && input !== \"immediate\") {\n    try {\n      // Convert to proper Date format (Handle space for cross-browser compatibility)\n      const date = new Date(input.replace(\" \", \"T\"));\n\n      // Subtract 5 hours 30 minutes (IST → UTC)\n      const utc = new Date(date.getTime() - (5.5 * 60 * 60 * 1000));\n\n      // Output ISO format (required by Wait node)\n      item.json.convertedDateTime = utc.toISOString();\n      item.json.skipWait = false;\n    } catch (e) {\n      // Fallback if date parsing fails\n      item.json.skipWait = true;\n    }\n  } else {\n    // 2. If 'immediate' or empty, tell n8n to skip the wait\n    item.json.convertedDateTime = new Date(Date.now()+5*1000).toISOString(); \n    item.json.skipWait = true;\n  }\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        288
+      ],
+      "id": "ac77402d-7d30-4a57-a927-1aeea0eae84d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json.convertedDateTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        768,
+        288
+      ],
+      "id": "42c2307b-1dba-476e-9a53-e3f3b21f40db",
+      "name": "Wait",
+      "webhookId": "505ea18e-914c-4735-9732-c10b0e79fa24"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const input = $('FastAPI Trigger').first().json.body.scheduled_time;\n\n  // 1. Check if input exists and isn't the 'immediate' flag\n  if (input && input !== \"immediate\") {\n    try {\n      // Convert to proper Date format (Handle space for cross-browser compatibility)\n      const date = new Date(input.replace(\" \", \"T\"));\n\n      // Subtract 5 hours 30 minutes (IST → UTC)\n      const utc = new Date(date.getTime() - (5.5 * 60 * 60 * 1000));\n\n      // Output ISO format (required by Wait node)\n      item.json.convertedDateTime = utc.toISOString();\n      item.json.skipWait = false;\n    } catch (e) {\n      // Fallback if date parsing fails\n      item.json.skipWait = true;\n    }\n  } else {\n    // 2. If 'immediate' or empty, tell n8n to skip the wait\n    item.json.convertedDateTime = new Date(Date.now()+5*1000).toISOString(); \n    item.json.skipWait = true;\n  }\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        624
+      ],
+      "id": "2c7af1db-d112-4dfc-84fa-67bd577c0eb7",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json.convertedDateTime  }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        720,
+        624
+      ],
+      "id": "b489ad63-23fe-45bb-9dc6-ce617dd82aae",
+      "name": "Wait4",
+      "webhookId": "505ea18e-914c-4735-9732-c10b0e79fa24"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const input = $('FastAPI Trigger').first().json.body.scheduled_time;\n\n  // 1. Check if input exists and isn't the 'immediate' flag\n  if (input && input !== \"immediate\") {\n    try {\n      // Convert to proper Date format (Handle space for cross-browser compatibility)\n      const date = new Date(input.replace(\" \", \"T\"));\n\n      // Subtract 5 hours 30 minutes (IST → UTC)\n      const utc = new Date(date.getTime() - (5.5 * 60 * 60 * 1000));\n\n      // Output ISO format (required by Wait node)\n      item.json.convertedDateTime = utc.toISOString();\n      item.json.skipWait = false;\n    } catch (e) {\n      // Fallback if date parsing fails\n      item.json.skipWait = true;\n    }\n  } else {\n    // 2. If 'immediate' or empty, tell n8n to skip the wait\n    item.json.convertedDateTime = new Date(Date.now()+5*1000).toISOString(); \n    item.json.skipWait = true;\n  }\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        992
+      ],
+      "id": "d69ec6c1-9f0d-466e-b208-a6154a96a2d0",
+      "name": "Code in JavaScript3"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json.convertedDateTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        992
+      ],
+      "id": "f2b2de6b-9447-4d20-86ad-b1219858cf8b",
+      "name": "Wait5",
+      "webhookId": "505ea18e-914c-4735-9732-c10b0e79fa24"
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n  const input = $('FastAPI Trigger').first().json.body.scheduled_time;\n\n  // 1. Check if input exists and isn't the 'immediate' flag\n  if (input && input !== \"immediate\") {\n    try {\n      // Convert to proper Date format (Handle space for cross-browser compatibility)\n      const date = new Date(input.replace(\" \", \"T\"));\n\n      // Subtract 5 hours 30 minutes (IST → UTC)\n      const utc = new Date(date.getTime() - (5.5 * 60 * 60 * 1000));\n\n      // Output ISO format (required by Wait node)\n      item.json.convertedDateTime = utc.toISOString();\n      item.json.skipWait = false;\n    } catch (e) {\n      // Fallback if date parsing fails\n      item.json.skipWait = true;\n    }\n  } else {\n    // 2. If 'immediate' or empty, tell n8n to skip the wait\n    item.json.convertedDateTime = new Date(Date.now()+5*1000).toISOString(); \n    item.json.skipWait = true;\n  }\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -32,
+        1200
+      ],
+      "id": "8899d2bc-e8d9-4838-8552-c43192c8a335",
+      "name": "Code in JavaScript4"
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $json.convertedDateTime }}"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        144,
+        1200
+      ],
+      "id": "7dc846df-d0c1-4c49-84a6-7a8d006a53fd",
+      "name": "Wait6",
+      "webhookId": "505ea18e-914c-4735-9732-c10b0e79fa24"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You're a professional and experienced person who gives caption to images.\n\nAnalyze this image url : {{ $json.body.image_url }}\nand provide and perfect caption that is perfect for Facebook and Instagram, also include the tag which matches with the image\n\nIMPORTANT : only provide one caption with hashtags included  "
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        48,
+        288
+      ],
+      "id": "e6b4f7a3-2078-4de3-9b57-d5babf565f8c",
+      "name": "ImageCaption Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JZmilfEQ32nbtenm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "postAs": "organization",
+        "organization": "115424324",
+        "text": "={{ $json.content.parts[0].text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        608,
+        1408
+      ],
+      "id": "b7cc795e-2fab-46ed-8733-88a96958226f",
+      "name": "Create a post",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "If78rKGsyuU4eEAn",
+          "name": "LinkedIn OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You're a professional, experienced and highly motivated person who gives manages Linked profile for many high profile premium clients, and professional linkedin business pages\n\nGive a prefect humanly write for the below given LinkedIn post topic\nPost Topic: {{ $json.body.text_topic }}\nmake it catchy, professional and with a prefect realistic example which with the topic, also add perfect hashtag for the topic so it reaches many audience.\nIMPORTANT : The response given by you will be used directly to publish, so do not mention any unnecessary things or statements"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        48,
+        1408
+      ],
+      "id": "d154993a-e25b-426d-9442-28be9de3a833",
+      "name": "VideocaptionModel1",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JZmilfEQ32nbtenm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cfbc3df-faf8-4b7d-a065-136353963892",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text.replace(/[*]/g,'') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        1408
+      ],
+      "id": "b875552e-4757-4ce8-a6c1-7279b5650eda",
+      "name": "VideoEdit1"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You're a professional, experienced and highly motivated person who gives manages Linked profile for many high profile premium clients, and professional linkedin business pages\n\n\nGive a prefect humanly write up for the below given both LinkedIn post topic and image (in url)\nPost Topic: {{ $json.body.text_topic }}\nImage_url :{{ $json.body.image_url }}\nmake it catchy, professional and with a prefect realistic example which with the topic, also add perfect hashtag for the topic so it reaches many audience.\n\nIMPORTANT : The response given by you will be used directly to publish, so do not mention any unnecessary things or statements"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        1616
+      ],
+      "id": "3a318142-d640-4ddb-aedd-fdd57a94076a",
+      "name": "VideocaptionModel2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "JZmilfEQ32nbtenm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "3cfbc3df-faf8-4b7d-a065-136353963892",
+              "name": "content.parts[0].text",
+              "value": "={{ $json.content.parts[0].text.replace(/[*]/g,'') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        1616
+      ],
+      "id": "189d6bae-cca2-4f52-b0ca-623692e56732",
+      "name": "VideoEdit2"
+    },
+    {
+      "parameters": {
+        "postAs": "organization",
+        "organization": "115424324",
+        "text": "={{ $json.content.parts[0].text }}",
+        "shareMediaCategory": "IMAGE",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        880,
+        1616
+      ],
+      "id": "e5e4ca3a-897d-4b82-bb10-3776d3f94a3c",
+      "name": "Create a post1",
+      "credentials": {
+        "linkedInOAuth2Api": {
+          "id": "If78rKGsyuU4eEAn",
+          "name": "LinkedIn OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Switch').item.json.body.image_url }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        640,
+        1616
+      ],
+      "id": "32eb00d2-4bd6-4b61-be69-234ac912a062",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "TextModel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ImageCaption Model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "VideocaptionModel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code in JavaScript4",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "VideocaptionModel1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "VideocaptionModel2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "TextModel": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ImageEditField": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insta Image media container": {
+      "main": [
+        [
+          {
+            "node": "Insta image wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insta image wait": {
+      "main": [
+        [
+          {
+            "node": "Insta image media publish",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideocaptionModel": {
+      "main": [
+        [
+          {
+            "node": "VideoEdit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoEdit": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoDownload": {
+      "main": [
+        [
+          {
+            "node": "FacebookVideo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instavideomediacontainer": {
+      "main": [
+        [
+          {
+            "node": "InstavideoWait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "InstavideoWait": {
+      "main": [
+        [
+          {
+            "node": "Insta vdo media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IG story md container": {
+      "main": [
+        [
+          {
+            "node": "Ig story wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ig story wait": {
+      "main": [
+        [
+          {
+            "node": "Insta story media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IG story vd md container": {
+      "main": [
+        [
+          {
+            "node": "Ig story vd wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ig story vd wait": {
+      "main": [
+        [
+          {
+            "node": "Insta story vd media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FastAPI Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript1": {
+      "main": [
+        [
+          {
+            "node": "Wait3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait3": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Facebook Graph API1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Insta Image media container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Wait4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait4": {
+      "main": [
+        [
+          {
+            "node": "VideoDownload",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Instavideomediacontainer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript3": {
+      "main": [
+        [
+          {
+            "node": "Wait5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript4": {
+      "main": [
+        [
+          {
+            "node": "Wait6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait5": {
+      "main": [
+        [
+          {
+            "node": "IG story md container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait6": {
+      "main": [
+        [
+          {
+            "node": "IG story vd md container",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Facebook Graph API": {
+      "main": [
+        []
+      ]
+    },
+    "ImageCaption Model": {
+      "main": [
+        [
+          {
+            "node": "ImageEditField",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a post": {
+      "main": [
+        []
+      ]
+    },
+    "VideocaptionModel1": {
+      "main": [
+        [
+          {
+            "node": "VideoEdit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoEdit1": {
+      "main": [
+        [
+          {
+            "node": "Create a post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideocaptionModel2": {
+      "main": [
+        [
+          {
+            "node": "VideoEdit2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VideoEdit2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Create a post1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "b779f1a5-6100-45ce-a4b9-9d927c62486c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "acd1361f15d0c4be3deb055faf4b6e1ee43952ddbc586fb618a3b5099af94041"
+  },
+  "id": "xzgHzLlBhN2lx4DD",
+  "tags": []
+}
