@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Scheduler Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark-bg: #0f172a;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #f1f5f9 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1e293b;
+        }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .navbar-brand i {
+            font-size: 1.8rem;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: white !important;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* ============ MAIN CONTAINER ============ */
+        .container-main {
+            padding: 2rem;
+            max-width: 1400px;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* ============ TABS ============ */
+        .nav-tabs {
+            border: none;
+            display: flex;
+            gap: 0;
+            background: var(--card-bg);
+            padding: 0.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .nav-tabs .nav-link {
+            color: var(--text-muted);
+            border: none;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tabs .nav-link:hover {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .nav-tabs .nav-link.active {
+            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+        }
+
+        .tab-pane {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============ FORMS ============ */
+        .form-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .form-section-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-section-title i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control,
+        .form-select {
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background-color: white;
+        }
+
+        .hidden-field {
+            display: none !important;
+        }
+
+        /* ============ BUTTONS ============ */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary) 0%, #db2777 100%);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .btn-outline-primary {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline-primary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-check:checked + .btn-outline-primary {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.875rem;
+        }
+
+        /* ============ RADIO & CHECKBOX GROUPS ============ */
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-group .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        /* ============ CARDS ============ */
+        .card {
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            background: var(--card-bg);
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+            border: none;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .card-body {
+            padding: 1.25rem;
+        }
+
+        /* ============ STATUS ALERTS ============ */
+        .alert {
+            border: none;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            animation: slideDown 0.3s ease;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+            border-left: 4px solid var(--success);
+            color: #047857;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
+            border-left: 4px solid var(--danger);
+            color: #991b1b;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(245, 158, 11, 0.05) 100%);
+            border-left: 4px solid var(--warning);
+            color: #92400e;
+        }
+
+        #status_box {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 350px;
+            z-index: 1050;
+            display: none;
+            animation: slideInRight 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(400px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* ============ TABLE ============ */
+        .table {
+            margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(236, 72, 153, 0.05) 100%);
+            border: none;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 600;
+            color: #0f172a;
+            padding: 1rem;
+        }
+
+        .table tbody td {
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .badge-success {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+        }
+
+        .badge-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #d97706 100%);
+            color: white;
+        }
+
+        .badge-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+            color: white;
+        }
+
+        .badge-info {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        /* ============ LOADING STATE ============ */
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.2em;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .container-main {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            #status_box {
+                width: calc(100% - 2rem);
+                right: 1rem;
+            }
+
+            .btn-group .btn {
+                min-width: 100px;
+            }
+        }
+
+        /* ============ EMPTY STATE ============ */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-muted);
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #cbd5e1;
+        }
+
+        .empty-state p {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-rocket"></i>
+                Social Media Scheduler Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#postsTab" data-bs-toggle="tab"><i class="fas fa-clock me-1"></i> Scheduled Posts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#accountsTab" data-bs-toggle="tab"><i class="fas fa-key me-1"></i> Accounts</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- STATUS BOX -->
+    <div id="status_box" class="alert alert-success shadow-lg border-0">
+        <div class="d-flex align-items-center">
+            <i class="fas fa-check-circle me-2" style="font-size: 1.2rem;"></i>
+            <strong class="me-auto">Success!</strong>
+            <button type="button" class="btn-close" onclick="this.parentElement.parentElement.style.display='none'"></button>
+        </div>
+        <hr class="my-2">
+        <span id="status_message">Operation completed successfully.</span>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container-main">
+        <div class="page-header">
+            <h1 class="page-title"><i class="fas fa-chart-line me-2" style="color: var(--primary);"></i>Social Media Hub</h1>
+            <p class="page-subtitle">Schedule, manage, and monitor your social media content across platforms</p>
+        </div>
+
+        <!-- TABS -->
+        <div class="tab-content">
+
+            <!-- ============ POSTS TAB ============ -->
+            <div class="tab-pane fade show active" id="postsTab">
+                
+                <!-- Publication Form -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-edit"></i>
+                        Create New Post
+                    </div>
+
+                    <form id="publishForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-image me-1" style="color: var(--primary);"></i> Media Type *</label>
+                                    <select id="media_type" name="media_type" class="form-select" required onchange="updateUI()">
+                                        <option value="" selected disabled>Select media type...</option>
+                                        <option value="text">📝 Text (Facebook only)</option>
+                                        <option value="image">🖼️ Image</option>
+                                        <option value="video">🎬 Video (Reel/Reels)</option>
+                                        <option value="story_image">📸 Story (Image)</option>
+                                        <option value="story_video">🎥 Story (Video)</option>
+                                        <option value="linkedin_text">🔗 LinkedIn Text (LinkedIn only)</option>
+                                        <option value="linkedin_image">🖼️ LinkedIn Text + Image (LinkedIn only)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-globe me-1" style="color: var(--secondary);"></i> Platform *</label>
+                                    <div class="btn-group w-100">
+                                        <input type="radio" class="btn-check" name="platform" id="platform_instagram" value="instagram" checked>
+                                        <label class="btn btn-outline-primary" for="platform_instagram"><i class="fab fa-instagram me-1"></i>Instagram</label>
+
+                                        <input type="radio" class="btn-check" name="platform" id="platform_facebook" value="facebook">
+                                        <label class="btn btn-outline-primary" for="platform_facebook"><i class="fab fa-facebook me-1"></i>Facebook</label>
+
+                                        <input type="radio" class="btn-check" name="platform" id="platform_linkedin" value="linkedin">
+                                        <label class="btn btn-outline-primary" for="platform_linkedin"><i class="fab fa-linkedin me-1"></i>LinkedIn</label>
+
+                                        <input type="radio" class="btn-check" name="platform" id="platform_both" value="both">
+                                        <label class="btn btn-outline-primary" for="platform_both"><i class="fas fa-link me-1"></i>Both</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Topic -->
+                        <div id="text_topic_section" class="mb-3 hidden-field">
+                            <label class="form-label"><i class="fas fa-pen-fancy me-1" style="color: var(--success);"></i> Post Topic *</label>
+                            <textarea id="text_topic" name="text_topic" class="form-control" rows="3" placeholder="Write your post content here..."></textarea>
+                        </div>
+
+                        <!-- Image URL -->
+                        <div id="image_url_section" class="mb-3 hidden-field">
+                            <label class="form-label"><i class="fas fa-link me-1" style="color: var(--primary);"></i> Image URL *</label>
+                            <input type="url" id="image_url" name="image_url" class="form-control" placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <!-- Video URL -->
+                        <div id="video_url_section" class="mb-3 hidden-field">
+                            <label class="form-label"><i class="fas fa-link me-1" style="color: var(--danger);"></i> Video URL *</label>
+                            <input type="url" id="video_url" name="video_url" class="form-control" placeholder="https://example.com/video.mp4">
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-clock me-1" style="color: var(--warning);"></i> Schedule *</label>
+                                    <div class="btn-group w-100">
+                                        <input type="radio" class="btn-check" name="publish_mode" id="publish_now" value="now" checked onchange="updateUI()">
+                                        <label class="btn btn-outline-primary" for="publish_now"><i class="fas fa-bolt me-1"></i>Publish Now</label>
+
+                                        <input type="radio" class="btn-check" name="publish_mode" id="publish_later" value="later" onchange="updateUI()">
+                                        <label class="btn btn-outline-primary" for="publish_later"><i class="fas fa-calendar me-1"></i>Schedule</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="schedule_input_section" class="mb-3 hidden-field">
+                                    <label class="form-label"><i class="fas fa-calendar-alt me-1" style="color: var(--primary);"></i> Date & Time</label>
+                                    <input type="datetime-local" id="scheduled_time" name="scheduled_time" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" id="submitBtn" class="btn btn-primary py-3">
+                                <i class="fas fa-paper-plane me-2"></i>
+                                <span id="btnText">Schedule Workflow</span>
+                                <span id="btnSpinner" class="spinner-border spinner-border-sm d-none ms-2" role="status"></span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Posts List -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-list"></i>
+                        Scheduled Posts
+                    </div>
+
+                    <div id="posts_list">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No posts scheduled yet</p>
+                            <small>Create a new post above to get started</small>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ============ ACCOUNTS TAB ============ -->
+            <div class="tab-pane fade" id="accountsTab">
+                
+                <!-- Add Account Form -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-plus-circle"></i>
+                        Add New Account
+                    </div>
+
+                    <form id="accountForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-globe me-1" style="color: var(--secondary);"></i> Platform *</label>
+                                    <select id="account_platform" name="platform" class="form-select" required>
+                                        <option value="" selected disabled>Select platform...</option>
+                                        <option value="instagram">📱 Instagram</option>
+                                        <option value="facebook">👍 Facebook</option>
+                                        <option value="linkedin">🔗 LinkedIn</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-user me-1" style="color: var(--primary);"></i> Account Name *</label>
+                                    <input type="text" id="account_name" name="account_name" class="form-control" placeholder="e.g., My Brand Page" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-key me-1" style="color: var(--success);"></i> Page Access Token</label>
+                                    <input type="password" id="page_token" name="page_access_token" class="form-control" placeholder="Enter token (masked)">
+                                    <small class="text-muted">Optional: Your page-specific access token</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label"><i class="fas fa-lock me-1" style="color: var(--danger);"></i> User Access Token</label>
+                                    <input type="password" id="user_token" name="user_access_token" class="form-control" placeholder="Enter token (masked)">
+                                    <small class="text-muted">Optional: Your user-level access token</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-hourglass-end me-1" style="color: var(--warning);"></i> Token Expiry Date</label>
+                            <input type="datetime-local" id="token_expiry" name="token_expiry_date" class="form-control">
+                            <small class="text-muted">Optional: When your token expires (we'll remind you!)</small>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success py-3">
+                                <i class="fas fa-plus me-2"></i>Save Account
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Accounts List -->
+                <div class="form-section">
+                    <div class="form-section-title">
+                        <i class="fas fa-users"></i>
+                        Saved Accounts
+                    </div>
+
+                    <div id="accounts_list">
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No accounts saved yet</p>
+                            <small>Add an account above to get started</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expiry Warnings -->
+                <div id="expiry_warnings" style="display: none;">
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-bell"></i>
+                            Token Expiry Alerts
+                        </div>
+                        <div id="warnings_list"></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============ UTILITIES ============
+        function formatDateTime(date) {
+            const pad = (num) => num.toString().padStart(2, '0');
+            return date.getFullYear() + '-' + pad(date.getMonth() + 1) + '-' + pad(date.getDate()) + 'T' +
+                   pad(date.getHours()) + ':' + pad(date.getMinutes());
+        }
+
+        function showStatus(message, type = 'success') {
+            const box = document.getElementById('status_box');
+            box.className = `alert alert-${type} shadow-lg border-0`;
+            document.getElementById('status_message').innerText = message;
+            box.style.display = 'block';
+            setTimeout(() => { box.style.display = 'none'; }, 5000);
+        }
+
+        // ============ POSTS TAB ============
+
+        function updateUI() {
+            const mediaType = document.getElementById('media_type').value;
+            const isLater = document.getElementById('publish_later').checked;
+
+            const textSection = document.getElementById('text_topic_section');
+            const imgSection = document.getElementById('image_url_section');
+            const videoSection = document.getElementById('video_url_section');
+            const dateSection = document.getElementById('schedule_input_section');
+
+            const platformInstagram = document.getElementById('platform_instagram');
+            const platformFacebook = document.getElementById('platform_facebook');
+            const platformLinkedin = document.getElementById('platform_linkedin');
+            const platformBoth = document.getElementById('platform_both');
+
+            [textSection, imgSection, videoSection].forEach(s => s.classList.add('hidden-field'));
+
+            if (['text', 'linkedin_text', 'linkedin_image'].includes(mediaType)) textSection.classList.remove('hidden-field');
+            if (['image', 'story_image', 'linkedin_image'].includes(mediaType)) imgSection.classList.remove('hidden-field');
+            if (['video', 'story_video'].includes(mediaType)) videoSection.classList.remove('hidden-field');
+
+            if (mediaType === 'text') {
+                platformInstagram.disabled = true;
+                platformFacebook.disabled = false;
+                platformLinkedin.disabled = true;
+                platformBoth.disabled = true;
+                platformFacebook.checked = true;
+            } else if (mediaType.startsWith('story_')) {
+                platformInstagram.disabled = false;
+                platformFacebook.disabled = true;
+                platformLinkedin.disabled = true;
+                platformBoth.disabled = true;
+                platformInstagram.checked = true;
+            } else if (mediaType.startsWith('linkedin_')) {
+                platformInstagram.disabled = true;
+                platformFacebook.disabled = true;
+                platformLinkedin.disabled = false;
+                platformBoth.disabled = true;
+                platformLinkedin.checked = true;
+            } else {
+                platformInstagram.disabled = false;
+                platformFacebook.disabled = false;
+                platformLinkedin.disabled = true;
+                platformBoth.disabled = false;
+                if (platformLinkedin.checked) {
+                    platformInstagram.checked = true;
+                }
+            }
+
+            if (isLater) dateSection.classList.remove('hidden-field');
+            else dateSection.classList.add('hidden-field');
+        }
+
+        document.getElementById('publishForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const btn = document.getElementById('submitBtn');
+            const spinner = document.getElementById('btnSpinner');
+            const btnText = document.getElementById('btnText');
+            const publishMode = document.querySelector('input[name="publish_mode"]:checked').value;
+            const timeInput = document.getElementById('scheduled_time');
+
+            btn.disabled = true;
+            spinner.classList.remove('d-none');
+            btnText.innerText = 'Processing...';
+
+            let finalTime = 'immediate';
+            if (publishMode === 'later') {
+                if (!timeInput.value.trim()) {
+                    const future = new Date();
+                    future.setHours(future.getHours() + 2);
+                    finalTime = future.toISOString();
+                } else {
+                    finalTime = new Date(timeInput.value).toISOString();
+                }
+            }
+
+            const formData = new FormData(e.target);
+            formData.set('scheduled_time', finalTime);
+
+            try {
+                const response = await fetch('/api/publish', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus(data.message || 'Post scheduled successfully!', 'success');
+                    e.target.reset();
+                    updateUI();
+                    loadPosts();
+                } else {
+                    showStatus(data.detail || 'Error scheduling post', 'danger');
+                }
+            } catch (err) {
+                showStatus('Connection error. Please try again.', 'danger');
+            } finally {
+                btn.disabled = false;
+                spinner.classList.add('d-none');
+                btnText.innerText = 'Schedule Workflow';
+            }
+        });
+
+        async function loadPosts() {
+            try {
+                const response = await fetch('/api/posts');
+                const posts = await response.json();
+
+                const list = document.getElementById('posts_list');
+                if (posts.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No posts scheduled yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                list.innerHTML = '<div class="table-responsive"><table class="table"><thead><tr><th>Media Type</th><th>Platform</th><th>Scheduled</th><th>Status</th><th>Actions</th></tr></thead><tbody>' +
+                    posts.map(post => `
+                        <tr>
+                            <td><span class="badge badge-info">${post.media_type}</span></td>
+                            <td>${post.platform}</td>
+                            <td>${new Date(post.scheduled_time).toLocaleString()}</td>
+                            <td><span class="badge badge-${post.status === 'published' ? 'success' : post.status === 'failed' ? 'danger' : 'warning'}">${post.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-danger" onclick="deletePost('${post._id}')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    `).join('') +
+                    '</tbody></table></div>';
+            } catch (err) {
+                console.error('Error loading posts:', err);
+            }
+        }
+
+        async function deletePost(postId) {
+            if (!confirm('Are you sure you want to delete this post?')) return;
+
+            try {
+                const response = await fetch(`/api/posts/${postId}`, { method: 'DELETE' });
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('Post deleted successfully!', 'success');
+                    loadPosts();
+                } else {
+                    showStatus(data.detail || 'Error deleting post', 'danger');
+                }
+            } catch (err) {
+                showStatus('Connection error', 'danger');
+            }
+        }
+
+        // ============ ACCOUNTS TAB ============
+
+        document.getElementById('accountForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            try {
+                const response = await fetch('/api/accounts', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('Account saved successfully!', 'success');
+                    e.target.reset();
+                    loadAccounts();
+                    loadExpiryWarnings();
+                } else {
+                    showStatus(data.detail || 'Error saving account', 'danger');
+                }
+            } catch (err) {
+                showStatus('Connection error', 'danger');
+            }
+        });
+
+        async function loadAccounts() {
+            try {
+                const response = await fetch('/api/accounts');
+                const accounts = await response.json();
+
+                const list = document.getElementById('accounts_list');
+                if (accounts.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>No accounts saved yet</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                list.innerHTML = '<div class="table-responsive"><table class="table"><thead><tr><th>Platform</th><th>Account</th><th>Created</th><th>Expiry</th><th>Status</th><th>Actions</th></tr></thead><tbody>' +
+                    accounts.map(acc => {
+                        const expiry = acc.token_expiry_date ? new Date(acc.token_expiry_date) : null;
+                        const isExpiringSoon = expiry && (expiry - new Date()) < 7 * 24 * 60 * 60 * 1000;
+                        return `
+                            <tr ${isExpiringSoon ? 'style="background-color: rgba(245, 158, 11, 0.05);"' : ''}>
+                                <td><strong>${acc.platform}</strong></td>
+                                <td>${acc.account_name}</td>
+                                <td>${new Date(acc.created_at).toLocaleDateString()}</td>
+                                <td>${expiry ? expiry.toLocaleDateString() : 'N/A'}</td>
+                                <td>
+                                    <span class="badge ${acc.is_active ? 'badge-success' : 'badge-warning'}">
+                                        ${acc.is_active ? 'Active' : 'Inactive'}
+                                    </span>
+                                    ${isExpiringSoon ? '<span class="badge badge-warning ms-2"><i class="fas fa-exclamation-triangle"></i> Expiring Soon</span>' : ''}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" onclick="deleteAccount('${acc._id}')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('') +
+                    '</tbody></table></div>';
+            } catch (err) {
+                console.error('Error loading accounts:', err);
+            }
+        }
+
+        async function deleteAccount(accountId) {
+            if (!confirm('Are you sure you want to delete this account?')) return;
+
+            try {
+                const response = await fetch(`/api/accounts/${accountId}`, { method: 'DELETE' });
+                const data = await response.json();
+
+                if (response.ok) {
+                    showStatus('Account deleted successfully!', 'success');
+                    loadAccounts();
+                    loadExpiryWarnings();
+                } else {
+                    showStatus(data.detail || 'Error deleting account', 'danger');
+                }
+            } catch (err) {
+                showStatus('Connection error', 'danger');
+            }
+        }
+
+        async function loadExpiryWarnings() {
+            try {
+                const response = await fetch('/api/accounts/expiry-warnings');
+                const warnings = await response.json();
+
+                const section = document.getElementById('expiry_warnings');
+                const list = document.getElementById('warnings_list');
+
+                if (warnings.length === 0) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                section.style.display = 'block';
+                list.innerHTML = warnings.map(acc => `
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>${acc.account_name}</strong> (${acc.platform}) - Token expires on <strong>${new Date(acc.token_expiry_date).toLocaleDateString()}</strong>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading expiry warnings:', err);
+            }
+        }
+
+        // ============ INITIALIZATION ============
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateUI();
+            loadPosts();
+            loadAccounts();
+            loadExpiryWarnings();
+
+            // Auto-refresh posts and warnings every 30 seconds
+            setInterval(loadPosts, 30000);
+            setInterval(loadExpiryWarnings, 60000);
+        });
+    </script>
+</body>
+</html>
